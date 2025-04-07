@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pokémon UNITE Team Synergy Suggestion Tool</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    select { margin: 5px; }
+    .result { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Pokémon UNITE Team Builder</h2>
+  <p>Select the 4 Pokémon already chosen by your teammates:</p>
+
+  <select id="p1"></select>
+  <select id="p2"></select>
+  <select id="p3"></select>
+  <select id="p4"></select>
+  <button onclick="suggestPokemon()">Suggest My Pick</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    const synergyMap = {
+      "Pikachu": ["Mr. Mime", "Snorlax"],
+      "Lucario": ["Eldegoss", "Machamp"],
+      "Cinderace": ["Eldegoss", "Blissey"],
+      "Gardevoir": ["Snorlax", "Blissey"],
+      "Greninja": ["Wigglytuff", "Blissey"],
+      "Gengar": ["Wigglytuff", "Slowbro"],
+      "Blissey": ["Cinderace", "Greninja", "Zeraora", "Garchomp"],
+      "Darkrai": ["Snorlax", "Gengar", "Eldegoss"],
+      "Machamp": ["Lucario", "Blissey"],
+      "Alolan Ninetales": ["Snorlax", "Wigglytuff"],
+      "Snorlax": ["Alolan Ninetales", "Gardevoir"],
+      "Wigglytuff": ["Greninja", "Gengar", "Venusaur"],
+      "Eldegoss": ["Lucario", "Cinderace"],
+      "Slowbro": ["Blissey", "Gardevoir"],
+      "Mr. Mime": ["Pikachu"]
+      // Add more as needed
+    };
+
+    const allPokemon = Object.keys(synergyMap);
+
+    const selects = ["p1", "p2", "p3", "p4"];
+
+    selects.forEach(id => {
+      const sel = document.getElementById(id);
+      allPokemon.forEach(poke => {
+        const opt = document.createElement("option");
+        opt.value = poke;
+        opt.text = poke;
+        sel.appendChild(opt);
+      });
+    });
+
+    function suggestPokemon() {
+      const selected = selects.map(id => document.getElementById(id).value);
+      const counter = {};
+
+      selected.forEach(poke => {
+        (synergyMap[poke] || []).forEach(match => {
+          if (!selected.includes(match)) {
+            counter[match] = (counter[match] || 0) + 1;
+          }
+        });
+      });
+
+      const sorted = Object.entries(counter).sort((a, b) => b[1] - a[1]);
+
+      const resultDiv = document.getElementById("result");
+      if (sorted.length === 0) {
+        resultDiv.textContent = "No strong synergy suggestions found. Try different team picks.";
+      } else {
+        resultDiv.innerHTML = `💡 Best Picks For Synergy: <br><ul>` +
+          sorted.slice(0, 3).map(([poke, score]) => `<li>${poke} (synergy score: ${score})</li>`).join('') +
+          `</ul>`;
+      }
+    }
+  </script>
+</body>
+</html>
