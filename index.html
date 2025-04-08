@@ -1,83 +1,403 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Pokémon UNITE Team Synergy Suggestion Tool</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    select { margin: 5px; }
-    .result { margin-top: 20px; font-weight: bold; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Team Synergy</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Pokémon UNITE Team Builder</h2>
-  <p>Select the 4 Pokémon already chosen by your teammates:</p>
+    <header class="header">
+        <img src="images/unite-logo-2x.png" alt="Pokémon Unite Logo" class="unite-logo">
+    </header>
 
-  <select id="p1"></select>
-  <select id="p2"></select>
-  <select id="p3"></select>
-  <select id="p4"></select>
-  <button onclick="suggestPokemon()">Suggest My Pick</button>
+    <div class="container">
+        <!-- Section for displaying selected Pokémon -->
 
-  <div class="result" id="result"></div>
+        <div class="selected-and-synergy">
+            <div class="selected-pokemon">
+                <h3>Selected Pokémon</h3>
+                <div id="selected-display"></div>
+                <!-- Reset Button -->
+            </div>
+            <div class="best-synergy">
+                <h3>Top 3 synergy matches for selected team</h3>
+                <div id="top-synergy-team"></div>
+         
+            </div>
+        </div>
 
-  <script>
-    const synergyMap = {
-      "Pikachu": ["Mr. Mime", "Snorlax"],
-      "Lucario": ["Eldegoss", "Machamp"],
-      "Cinderace": ["Eldegoss", "Blissey"],
-      "Gardevoir": ["Snorlax", "Blissey"],
-      "Greninja": ["Wigglytuff", "Blissey"],
-      "Gengar": ["Wigglytuff", "Slowbro"],
-      "Blissey": ["Cinderace", "Greninja", "Zeraora", "Garchomp"],
-      "Darkrai": ["Snorlax", "Gengar", "Eldegoss"],
-      "Machamp": ["Lucario", "Blissey"],
-      "Alolan Ninetales": ["Snorlax", "Wigglytuff"],
-      "Snorlax": ["Alolan Ninetales", "Gardevoir"],
-      "Wigglytuff": ["Greninja", "Gengar", "Venusaur"],
-      "Eldegoss": ["Lucario", "Cinderace"],
-      "Slowbro": ["Blissey", "Gardevoir"],
-      "Mr. Mime": ["Pikachu"]
-      // Add more as needed
-    };
+    <button class="button" onclick="resetSelection()">Reset Selection</button>
+            
+        <!-- Pokémon Directory (Icons to choose from) -->
+        <div class="pokemon-directory">
+            <ul class="cards">
+                <!-- Dynamically added Pokémon -->
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('suicune', 'images/suicune/suicune.png', 'all-rounder')">
+                        <img src="images/suicune/suicune.png" alt="Suicune" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                </li>
+                <li class="cards__item">
+                <a href="javascript:void(0);" onclick="selectPokemon('galarian-rapidash', 'images/galarian-rapidash/galarian-rapidash.png', 'speedster')">
+                    <img src="images/galarian-rapidash/galarian-rapidash.png" alt="Galarian-rapidash" class="pokemon-icon speedster">
+                </a>
+                </li>
+                <li class="cards__item">
+                <a href="javascript:void(0);" onclick="selectPokemon('tinkaton', 'images/tinkaton/tinkaton.png', 'all-rounder')">
+                    <img src="images/tinkaton/tinkaton.png" alt="Tinkaton" class="pokemon-icon all-rounder">
+                </a>
+                </li>
+                <li class="cards__item">
+                <a href="javascript:void(0);" onclick="selectPokemon('psyduck', 'images/psyduck/psyduck.png', 'supporter')">
+                    <img src="images/psyduck/psyduck.png" alt="Psyduck" class="pokemon-icon supporter">
+                </a>
+                </li>
+                <li class="cards__item">
+                <a href="javascript:void(0);" onclick="selectPokemon('darkrai', 'images/darkrai/darkrai.png', 'speedster')">
+                    <img src="images/darkrai/darkrai.png" alt="Darkrai" class="pokemon-icon speedster">
+                </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('armarouge', 'images/armarouge/armarouge.png', 'attacker')">
+                        <img src="images/armarouge/armarouge.png" alt="Armarouge" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('ho-oh', 'images/ho-oh/ho-oh.png', 'defender')">
+                        <img src="images/ho-oh/ho-oh.png" alt="Ho-oh" class="pokemon-icon defender">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('ceruledge', 'images/ceruledge/ceruledge.png', 'all-rounder')">
+                        <img src="images/ceruledge/ceruledge.png" alt="Ceruledge" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('falinks', 'images/falinks/falinks.png', 'all-rounder')">
+                        <img src="images/falinks/falinks.png" alt="Falinks" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('miraidon', 'images/miraidon/miraidon.png', 'attacker')">
+                        <img src="images/miraidon/miraidon.png" alt="Miraidon" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('gyarados', 'images/gyarados/gyarados.png', 'all-rounder')">
+                        <img src="images/gyarados/gyarados.png" alt="Gyarados" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('metagross', 'images/metagross/metagross.png', 'all-rounder')">
+                        <img src="images/metagross/metagross.png" alt="Metagross" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('meowscarada', 'images/meowscarada/meowscarada.png', 'speedster')">
+                        <img src="images/meowscarada/meowscarada.png" alt="Meowscarada" class="pokemon-icon speedster">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('mimikyu', 'images/mimikyu/mimikyu.png', 'all-rounder')">
+                        <img src="images/mimikyu/mimikyu.png" alt="Mimikyu" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('blaziken', 'images/blaziken/blaziken.png', 'all-rounder')">
+                        <img src="images/blaziken/blaziken.png" alt="Blaziken" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('mewtwo', 'images/mewtwo/mewtwo.png', 'attacker')">
+                        <img src="images/mewtwo/mewtwo.png" alt="Mewtwo" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('inteleon', 'images/inteleon/inteleon.png', 'attacker')">
+                        <img src="images/inteleon/inteleon.png" alt="Inteleon" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('leafeon', 'images/leafeon/leafeon.png', 'speedster')">
+                        <img src="images/leafeon/leafeon.png" alt="Leafeon" class="pokemon-icon speedster">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('umbreon', 'images/umbreon/umbreon.png', 'defender')">
+                        <img src="images/umbreon/umbreon.png" alt="Umbreon" class="pokemon-icon defender">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('chandelure', 'images/chandelure/chandelure.png', 'attacker')">
+                        <img src="images/chandelure/chandelure.png" alt="Chandelure" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('lapras', 'images/lapras/lapras.png', 'defender')">
+                        <img src="images/lapras/lapras.png" alt="Lapras" class="pokemon-icon defender">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('goodra', 'images/goodra/goodra.png', 'defender')">
+                        <img src="images/goodra/goodra.png" alt="Goodra" class="pokemon-icon defender">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('zacian', 'images/zacian/zacian.png', 'all-rounder')">
+                        <img src="images/zacian/zacian.png" alt="Zacian" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('comfey', 'images/comfey/comfey.png', 'supporter')">
+                        <img src="images/comfey/comfey.png" alt="Comfey" class="pokemon-icon supporter">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('dragapult', 'images/dragapult/dragapult.png', 'attacker')">
+                        <img src="images/dragapult/dragapult.png" alt="Dragapult" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('urshifu', 'images/urshifu/urshifu.png', 'all-rounder')">
+                        <img src="images/urshifu/urshifu.png" alt="Urshifu" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('sableye', 'images/sableye/sableye.png', 'supporter')">
+                        <img src="images/sableye/sableye.png" alt="Sableye" class="pokemon-icon supporter">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('zoroark', 'images/zoroark/zoroark.png', 'speedster')">
+                        <img src="images/zoroark/zoroark.png" alt="Zoroark" class="pokemon-icon speedster">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('clefable', 'images/clefable/clefable.png', 'supporter')">
+                        <img src="images/clefable/clefable.png" alt="Clefable" class="pokemon-icon supporter">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('scizor', 'images/scizor/scizor.png', 'all-rounder')">
+                        <img src="images/scizor/scizor.png" alt="Scizor" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('dodrio', 'images/dodrio/dodrio.png', 'speedster')">
+                        <img src="images/dodrio/dodrio.png" alt="Dodrio" class="pokemon-icon speedster">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('mew', 'images/mew/mew.png', 'attacker')">
+                        <img src="images/mew/mew.png" alt="Mew" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('tyranitar', 'images/tyranitar/tyranitar.png', 'all-rounder')">
+                        <img src="images/tyranitar/tyranitar.png" alt="Tyranitar" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('buzzwole', 'images/buzzwole/buzzwole.png', 'all-rounder')">
+                        <img src="images/buzzwole/buzzwole.png" alt="Buzzwole" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('glaceon', 'images/glaceon/glaceon.png', 'attacker')">
+                        <img src="images/glaceon/glaceon.png" alt="Glaceon" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('delphox', 'images/delphox/delphox.png', 'attacker')">
+                        <img src="images/delphox/delphox.png" alt="Delphox" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('espeon', 'images/espeon/espeon.png', 'attacker')">
+                        <img src="images/espeon/espeon.png" alt="Espeon" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('azumarill', 'images/azumarill/azumarill.png', 'all-rounder')">
+                        <img src="images/azumarill/azumarill.png" alt="Azumarill" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('duraludon', 'images/duraludon/duraludon.png', 'attacker')">
+                        <img src="images/duraludon/duraludon.png" alt="Duraludon" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('hoopa', 'images/hoopa/hoopa.png', 'supporter')">
+                        <img src="images/hoopa/hoopa.png" alt="Hoopa" class="pokemon-icon supporter">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('aegislash', 'images/aegislash/aegislash.png', 'all-rounder')">
+                        <img src="images/aegislash/aegislash.png" alt="Aegislash" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('trevenant', 'images/trevenant/trevenant.png', 'defender')">
+                        <img src="images/trevenant/trevenant.png" alt="Trevenant" class="pokemon-icon defender">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('dragonite', 'images/dragonite/dragonite.png', 'all-rounder')">
+                        <img src="images/dragonite/dragonite.png" alt="Dragonite" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('tsareena', 'images/tsareena/tsareena.png', 'all-rounder')">
+                        <img src="images/tsareena/tsareena.png" alt="Tsareena" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('decidueye', 'images/decidueye/decidueye.png', 'attacker')">
+                        <img src="images/decidueye/decidueye.png" alt="Decidueye" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('greedent', 'images/greedent/greedent.png', 'defender')">
+                        <img src="images/greedent/greedent.png" alt="Greedent" class="pokemon-icon defender">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('sylveon', 'images/sylveon/sylveon.png', 'attacker')">
+                        <img src="images/sylveon/sylveon.png" alt="Sylveon" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('mamoswine', 'images/mamoswine/mamoswine.png', 'defender')">
+                        <img src="images/mamoswine/mamoswine.png" alt="Mamoswine" class="pokemon-icon defender">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('blastoise', 'images/blastoise/blastoise.png', 'defender')">
+                        <img src="images/blastoise/blastoise.png" alt="Blastoise" class="pokemon-icon defender">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('blissey', 'images/blissey/blissey.png', 'supporter')">
+                        <img src="images/blissey/blissey.png" alt="Blissey" class="pokemon-icon supporter">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('gardevoir', 'images/gardevoir/gardevoir.png', 'attacker')">
+                        <img src="images/gardevoir/gardevoir.png" alt="Gardevoir" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('zeraora', 'images/zeraora/zeraora.png', 'speedster')">
+                        <img src="images/zeraora/zeraora.png" alt="Zeraora" class="pokemon-icon speedster">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('pikachu', 'images/pikachu/pikachu.png', 'attacker')">
+                        <img src="images/pikachu/pikachu.png" alt="Pikachu" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('charizard', 'images/charizard/charizard.png', 'all-rounder')">
+                        <img src="images/charizard/charizard.png" alt="Charizard" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('snorlax', 'images/snorlax/snorlax.png', 'defender')">
+                        <img src="images/snorlax/snorlax.png" alt="Snorlax" class="pokemon-icon defender">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('crustle', 'images/crustle/crustle.png', 'defender')">
+                        <img src="images/crustle/crustle.png" alt="Crustle" class="pokemon-icon defender">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('greninja', 'images/greninja/greninja.png', 'attacker')">
+                        <img src="images/greninja/greninja.png" alt="Greninja" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('eldegoss', 'images/eldegoss/eldegoss.png', 'supporter')">
+                        <img src="images/eldegoss/eldegoss.png" alt="Eldegoss" class="pokemon-icon supporter">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('talonflame', 'images/talonflame/talonflame.png', 'speedster')">
+                        <img src="images/talonflame/talonflame.png" alt="Talonflame" class="pokemon-icon speedster">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('lucario', 'images/lucario/lucario.png', 'all-rounder')">
+                        <img src="images/lucario/lucario.png" alt="Lucario" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('venusaur', 'images/venusaur/venusaur.png', 'attacker')">
+                        <img src="images/venusaur/venusaur.png" alt="Venusaur" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('mr-mime', 'images/mr-mime/mr-mime.png', 'supporter')">
+                        <img src="images/mr-mime/mr-mime.png" alt="Mr-mime" class="pokemon-icon supporter">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('slowbro', 'images/slowbro/slowbro.png', 'defender')">
+                        <img src="images/slowbro/slowbro.png" alt="Slowbro" class="pokemon-icon defender">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('absol', 'images/absol/absol.png', 'speedster')">
+                        <img src="images/absol/absol.png" alt="Absol" class="pokemon-icon speedster">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('machamp', 'images/machamp/machamp.png', 'all-rounder')">
+                        <img src="images/machamp/machamp.png" alt="Machamp" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('wigglytuff', 'images/wigglytuff/wigglytuff.png', 'supporter')">
+                        <img src="images/wigglytuff/wigglytuff.png" alt="Wigglytuff" class="pokemon-icon supporter">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('alolan-ninetales', 'images/alolan-ninetales/alolan-ninetales.png', 'attacker')">
+                        <img src="images/alolan-ninetales/alolan-ninetales.png" alt="Alolan-ninetales" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('cramorant', 'images/cramorant/cramorant.png', 'attacker')">
+                        <img src="images/cramorant/cramorant.png" alt="Cramorant" class="pokemon-icon attacker">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('gengar', 'images/gengar/gengar.png', 'speedster')">
+                        <img src="images/gengar/gengar.png" alt="Gengar" class="pokemon-icon speedster">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('garchomp', 'images/garchomp/garchomp.png', 'all-rounder')">
+                        <img src="images/garchomp/garchomp.png" alt="Garchomp" class="pokemon-icon all-rounder">
+                    </a>
+                </li>
+                <li class="cards__item">
+                    <a href="javascript:void(0);" onclick="selectPokemon('cinderace', 'images/cinderace/cinderace.png', 'attacker')">
+                        <img src="images/cinderace/cinderace.png" alt="Cinderace" class="pokemon-icon attacker">
+                    </a>
+                </li>
 
-    const allPokemon = Object.keys(synergyMap);
 
-    const selects = ["p1", "p2", "p3", "p4"];
 
-    selects.forEach(id => {
-      const sel = document.getElementById(id);
-      allPokemon.forEach(poke => {
-        const opt = document.createElement("option");
-        opt.value = poke;
-        opt.text = poke;
-        sel.appendChild(opt);
-      });
-    });
+              <!-- Add other Pokémon as needed, example: -->
+              <!-- Add more Pokémon here in similar fashion -->
+            </ul>
+        </div>
+    </div>
 
-    function suggestPokemon() {
-      const selected = selects.map(id => document.getElementById(id).value);
-      const counter = {};
-
-      selected.forEach(poke => {
-        (synergyMap[poke] || []).forEach(match => {
-          if (!selected.includes(match)) {
-            counter[match] = (counter[match] || 0) + 1;
-          }
-        });
-      });
-
-      const sorted = Object.entries(counter).sort((a, b) => b[1] - a[1]);
-
-      const resultDiv = document.getElementById("result");
-      if (sorted.length === 0) {
-        resultDiv.textContent = "No strong synergy suggestions found. Try different team picks.";
-      } else {
-        resultDiv.innerHTML = `💡 Best Picks For Synergy: <br><ul>` +
-          sorted.slice(0, 3).map(([poke, score]) => `<li>${poke} (synergy score: ${score})</li>`).join('') +
-          `</ul>`;
-      }
-    }
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
