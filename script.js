@@ -815,7 +815,7 @@ const allPokemonData = {
     umbreon: { image: "images/umbreon/umbreon.png", role: "defender" },
     urshifu: { image: "images/urshifu/urshifu.png", role: "all-rounder" },
     venusaur: { image: "images/venusaur/venusaur.png", role: "attacker" },
-    Wigglytuff: { image: "images/Wigglytuff/Wigglytuff.png", role: "supporter" },
+    Wigglytuff: { image: "images/wigglytuff/wigglytuff.png", role: "supporter" },
     zacian: { image: "images/zacian/zacian.png", role: "all-rounder" },
     zeraora: { image: "images/zeraora/zeraora.png", role: "speedster" },
     zoroark: { image: "images/zoroark/zoroark.png", role: "speedster" },
