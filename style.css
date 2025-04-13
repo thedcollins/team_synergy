@@ -1,15 +1,15 @@
-/* General styles */
+/* General styles (Keep from previous versions) */
 body {
     font-family: "Exo 2", sans-serif;
     background-color: #6523b6;
+    margin: 0;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
-    padding: 20px;
+    color: #333;
 }
 
-/* Style for the header containing the logo */
 .header {
     width: 100%;
     display: flex;
@@ -23,115 +23,115 @@ body {
     height: auto;
 }
 
-/* Main container for the selected Pokémon and synergy section */
-.container {
-    max-width: 900px;
+/* NEW Detailed Layout Container */
+.detailed-container {
+    display: flex; /* Side-by-side columns */
     width: 100%;
+    max-width: 1200px; /* Adjust as needed */
+    gap: 20px;
+    background-color: #eee;
+    padding: 20px;
+    border-radius: 8px;
+    align-items: flex-start; /* Align columns to the top */
 }
 
-/* Container to hold selected Pokémon and synergy section in the same row */
-.selected-and-synergy {
+/* Left Column Styles */
+.left-column {
+    flex: 1; /* Takes up 1 part of the space */
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;  /* Align items at the top */
-    width: 100%;
+    flex-direction: column; /* Stack info sections vertically */
+    gap: 15px; /* Space between sections */
 }
 
-/* Section for selected Pokémon */
-.selected-pokemon {
-    text-align: center;
-    flex: 1;
+/* Right Column Styles (Pokémon Grid) */
+.right-column {
+    flex: 2; /* Takes up 2 parts, wider */
     background-color: #ffffff;
-    display: flex;
-    flex-direction: column;  /* Align text and icons vertically */
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    min-height: 200px;
-    overflow: hidden;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    /* Grid area expands naturally, page scrolls */
 }
 
-/* Move text above the icons */
-.selected-pokemon p {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-/* Section for synergy Pokémon */
-.best-synergy {
-    text-align: center;
-    flex: 1;
-    display: flex;
-    flex-direction: column;  /* Align text and icons vertically */
-    justify-content: center;
-    align-items: center;
+/* Styling for individual sections in the Left Column */
+.info-section {
     background-color: #ffffff;
-    height: 200px;
-    min-height: 200px;
-    overflow: hidden;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.best-synergy p {
-    font-size: 1.2rem;
-    font-weight: bold;
+.info-section h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #19072d;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
 }
 
-/* Container for icons (ensures they are in a row) */
-.selected-pokemon #selected-display,
-.best-synergy #synergy-display {
-    display: flex;
-    flex-wrap: nowrap;  /* Ensure the icons are in a single row */
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
+/* Selected Pokémon Area Specific Styles */
+.selected-pokemon-area {
+    text-align: center;
 }
 
-/* Pokémon icon display inside both sections */
-.pokemon-icon {
-    width: 80px;
-    height: 80px;
+/* --- REVISED RULES START --- */
+#selected-pokemon-display {
+    display: flex;          /* Make it a flex container */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;    /* Center children horizontally */
+    /* Add other styles if needed, e.g., min-height */
+}
+
+#selected-pokemon-display img {
+    /* Keep existing size, border, etc. */
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease;
     border: 3px solid #19072d;
     object-fit: cover;
-    position: relative;
+
+    /* Centering styles */
+    display: block;         /* Treat as a block element */
+    margin-left: auto;      /* Auto left margin */
+    margin-right: auto;     /* Auto right margin */
+
+    /* Spacing */
+    margin-bottom: 5px;
+}
+/* --- REVISED RULES END --- */
+
+#selected-pokemon-display p {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 5px;
+    /* text-align: center; /* This should be handled by align-items on parent now */
 }
 
-/* Gradient overlay */
-.pokemon-icon::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0) 38%);
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* Image inside the Pokémon icon */
-.pokemon-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    transition: transform 0.2s ease;
-    z-index: 2;
-}
-
-/* Hover effect */
-.pokemon-icon:hover img {
-    transform: scale(1.1);
-}
-
-/* Pokémon Directory */
-.pokemon-directory {
+/* Styles for the lists within info sections */
+.pokemon-list-display {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20px;
+    justify-content: center; /* Center icons */
+    gap: 8px;
+    min-height: 50px; /* Ensure area has some height */
+    padding-top: 5px;
 }
 
+/* Icons within the info lists */
+.pokemon-list-display .pokemon-icon {
+    width: 30px;
+    height: 30px;
+    border-width: 2px;
+}
+
+/* Pokémon Grid Area (Right Column) */
+.pokemon-selection-grid h2 {
+    text-align: center;
+    margin-top: 0;
+    color: #19072d;
+}
 .cards {
     list-style: none;
     padding: 0;
@@ -139,31 +139,40 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 10px;
 }
-
 .cards__item {
-    width: 80px;
-    height: 80px;
-    margin: 10px;
     cursor: pointer;
 }
 
+/* Pokémon Icon Styles (Keep from previous versions) */
+.pokemon-icon {
+    width: 65px; /* Grid icons */
+    height: 65px;
+    border-radius: 50%;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 3px solid #19072d;
+    object-fit: cover;
+    position: relative;
+    display: block; /* Default display for icons */
+}
 /* Role-based background colors */
 .all-rounder {
     background-color: #ce5fd3;
-    background-image: linear-gradient(45deg, #bd57c1 25%, transparent 25%), 
-                      linear-gradient(-45deg, #bd57c1 25%, transparent 25%), 
-                      linear-gradient(45deg, transparent 75%, #bd57c1 75%), 
+    background-image: linear-gradient(45deg, #bd57c1 25%, transparent 25%),
+                      linear-gradient(-45deg, #bd57c1 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #bd57c1 75%),
                       linear-gradient(-45deg, transparent 75%, #bd57c1 75%);
-    background-size: 60px 60px; 
-    background-position: 10px 10px, 10px 40px, 40px -20px, -20px 10px; 
+    background-size: 60px 60px;
+    background-position: 10px 10px, 10px 40px, 40px -20px, -20px 10px;
 }
 
 .speedster {
     background-color: #29a5e3;
-    background-image: linear-gradient(45deg, #2497cf 25%, transparent 25%), 
-                      linear-gradient(-45deg, #2497cf 25%, transparent 25%), 
-                      linear-gradient(45deg, transparent 75%, #2497cf 75%), 
+    background-image: linear-gradient(45deg, #2497cf 25%, transparent 25%),
+                      linear-gradient(-45deg, #2497cf 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #2497cf 75%),
                       linear-gradient(-45deg, transparent 75%, #2497cf 75%);
     background-size: 60px 60px;
     background-position: 10px 10px, 10px 40px, 40px -20px, -20px 10px;
@@ -171,48 +180,37 @@ body {
 
 .supporter {
     background-color: #dc923f;
-    background-image: linear-gradient(45deg, #c98539 25%, transparent 25%), 
-                      linear-gradient(-45deg, #c98539 25%, transparent 25%), 
-                      linear-gradient(45deg, transparent 75%, #c98539 75%), 
+    background-image: linear-gradient(45deg, #c98539 25%, transparent 25%),
+                      linear-gradient(-45deg, #c98539 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #c98539 75%),
                       linear-gradient(-45deg, transparent 75%, #c98539 75%);
-    background-size: 60px 60px; 
+    background-size: 60px 60px;
     background-position: 10px 10px, 10px 40px, 40px -20px, -20px 10px;
 }
 
 .defender {
     background-color: #aced5b;
-    background-image: linear-gradient(45deg, #9dd953 25%, transparent 25%), 
-                      linear-gradient(-45deg, #9dd953 25%, transparent 25%), 
-                      linear-gradient(45deg, transparent 75%, #9dd953 75%), 
+    background-image: linear-gradient(45deg, #9dd953 25%, transparent 25%),
+                      linear-gradient(-45deg, #9dd953 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #9dd953 75%),
                       linear-gradient(-45deg, transparent 75%, #9dd953 75%);
-    background-size: 60px 60px; 
+    background-size: 60px 60px;
     background-position: 10px 10px, 10px 40px, 40px -20px, -20px 10px;
 }
 
 .attacker {
     background-color: #f16c38;
-    background-image: linear-gradient(45deg, #dc6332 25%, transparent 25%), 
-                      linear-gradient(-45deg, #dc6332 25%, transparent 25%), 
-                      linear-gradient(45deg, transparent 75%, #dc6332 75%), 
+    background-image: linear-gradient(45deg, #dc6332 25%, transparent 25%),
+                      linear-gradient(-45deg, #dc6332 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #dc6332 75%),
                       linear-gradient(-45deg, transparent 75%, #dc6332 75%);
-    background-size: 60px 60px; 
+    background-size: 60px 60px;
     background-position: 10px 10px, 10px 40px, 40px -20px, -20px 10px;
 }
-.button {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center;     /* Center vertically */
-    margin: 0 auto;          /* Ensures the button is centered in its container */
-    padding: 10px 20px;      /* Example padding, adjust as necessary */
-    background-color: #220a3d; /* Example background color */
-    color: white;            /* Text color */
-    border: none;            /* Remove default border */
-    border-radius: 5px;      /* Optional: rounded corners */
-    cursor: pointer;        /* Make the cursor a pointer to indicate it's clickable */
-    font-size: 16px;         /* Font size for the button text */
+.pokemon-icon.selected { /* Highlight in grid */
+    box-shadow: 0 0 10px 3px gold;
+    transform: scale(1.1);
 }
-
-/* Optional: Button hover effect */
-.button:hover {
-    background-color: #ffffff; /* Slightly darker shade on hover */
+.pokemon-icon:hover {
+    transform: scale(1.1);
 }

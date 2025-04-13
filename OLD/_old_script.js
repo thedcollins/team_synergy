@@ -1,4 +1,7 @@
-const synergyscores = {
+let selectedPokemons = [];
+
+const synergyScores = {
+
     absol: {
         gardevoir: 8.5,
         pikachu: 8.0,
@@ -740,4 +743,180 @@ const synergyscores = {
         mamoswine: 8.2,
         tsareena: 8.0
     }
+};
+
+// All Pokémon data (for showing images/roles)
+const allPokemonData = {
+    absol: { image: "images/absol/absol.png", role: "speedster" },
+    aegislash: { image: "images/aegislash/aegislash.png", role: "all-rounder" },
+    "alolan-ninetales": { image: "images/alolan-ninetales/alolan-ninetales.png", role: "attacker" },
+    armarouge: { image: "images/armarouge/armarouge.png", role: "attacker" },
+    azumarill: { image: "images/azumarill/azumarill.png", role: "all-rounder" },
+    blastoise: { image: "images/blastoise/blastoise.png", role: "defender" },
+    blaziken: { image: "images/blaziken/blaziken.png", role: "all-rounder" },
+    blissey: { image: "images/blissey/blissey.png", role: "supporter" },
+    buzzwole: { image: "images/buzzwole/buzzwole.png", role: "all-rounder" },
+    ceruledge: { image: "images/ceruledge/ceruledge.png", role: "all-rounder" },
+    chandelure: { image: "images/chandelure/chandelure.png", role: "attacker" },
+    charizard: { image: "images/charizard/charizard.png", role: "all-rounder" },
+    cinderace: { image: "images/cinderace/cinderace.png", role: "attacker" },
+    clefable: { image: "images/clefable/clefable.png", role: "supporter" },
+    comfey: { image: "images/comfey/comfey.png", role: "supporter" },
+    cramorant: { image: "images/cramorant/cramorant.png", role: "attacker" },
+    crustle: { image: "images/crustle/crustle.png", role: "defender" },
+    darkrai: { image: "images/darkrai/darkrai.png", role: "speedster" },
+    decidueye: { image: "images/decidueye/decidueye.png", role: "attacker" },
+    delphox: { image: "images/delphox/delphox.png", role: "attacker" },
+    dodrio: { image: "images/dodrio/dodrio.png", role: "speedster" },
+    dragapult: { image: "images/dragapult/dragapult.png", role: "attacker" },
+    dragonite: { image: "images/dragonite/dragonite.png", role: "all-rounder" },
+    duraludon: { image: "images/duraludon/duraludon.png", role: "attacker" },
+    eldegoss: { image: "images/eldegoss/eldegoss.png", role: "supporter" },
+    espeon: { image: "images/espeon/espeon.png", role: "attacker" },
+    falinks: { image: "images/falinks/falinks.png", role: "all-rounder" },
+    "galarian-rapidash": { image: "images/galarian-rapidash/galarian-rapidash.png", role: "speedster" },
+    garchomp: { image: "images/garchomp/garchomp.png", role: "all-rounder" },
+    gardevoir: { image: "images/gardevoir/gardevoir.png", role: "attacker" },
+    gengar: { image: "images/gengar/gengar.png", role: "speedster" },
+    glaceon: { image: "images/glaceon/glaceon.png", role: "attacker" },
+    goodra: { image: "images/goodra/goodra.png", role: "defender" },
+    greedent: { image: "images/greedent/greedent.png", role: "defender" },
+    greninja: { image: "images/greninja/greninja.png", role: "attacker" },
+    gyarados: { image: "images/gyarados/gyarados.png", role: "all-rounder" },
+    "ho-oh": { image: "images/ho-oh/ho-oh.png", role: "defender" },
+    hoopa: { image: "images/hoopa/hoopa.png", role: "supporter" },
+    inteleon: { image: "images/inteleon/inteleon.png", role: "attacker" },
+    lapras: { image: "images/lapras/lapras.png", role: "defender" },
+    leafeon: { image: "images/leafeon/leafeon.png", role: "speedster" },
+    lucario: { image: "images/lucario/lucario.png", role: "all-rounder" },
+    machamp: { image: "images/machamp/machamp.png", role: "all-rounder" },
+    mamoswine: { image: "images/mamoswine/mamoswine.png", role: "defender" },
+    mewtwo: { image: "images/mewtwo/mewtwo.png", role: "all-rounder" },
+    meowscarada: { image: "images/meowscarada/meowscarada.png", role: "speedster" },
+    metagross: { image: "images/metagross/metagross.png", role: "all-rounder" },
+    mew: { image: "images/mew/mew.png", role: "attacker" },
+    mimikyu: { image: "images/mimikyu/mimikyu.png", role: "all-rounder" },
+    miraidon: { image: "images/miraidon/miraidon.png", role: "attacker" },
+    "mr-mime": { image: "images/mr-mime/mr-mime.png", role: "supporter" },
+    pikachu: { image: "images/pikachu/pikachu.png", role: "attacker" },
+    mew: { image: "images/mew/mew.png", role: "attacker" },
+    psyduck: { image: "images/psyduck/psyduck.png", role: "supporter" },
+    sableye: { image: "images/sableye/sableye.png", role: "supporter" },
+    scizor: { image: "images/scizor/scizor.png", role: "all-rounder" },
+    slowbro: { image: "images/slowbro/slowbro.png", role: "defender" },
+    snorlax: { image: "images/snorlax/snorlax.png", role: "defender" },
+    suicune: { image: "images/suicune/suicune.png", role: "all-rounder" },
+    sylveon: { image: "images/sylveon/sylveon.png", role: "attacker" },
+    talonflame: { image: "images/talonflame/talonflame.png", role: "speedster" },
+    tinkaton: { image: "images/tinkaton/tinkaton.png", role: "all-rounder" },
+    trevenant: { image: "images/trevenant/trevenant.png", role: "defender" },
+    tsareena: { image: "images/tsareena/tsareena.png", role: "all-rounder" },
+    tyranitar: { image: "images/tyranitar/tyranitar.png", role: "all-rounder" },
+    umbreon: { image: "images/umbreon/umbreon.png", role: "defender" },
+    urshifu: { image: "images/urshifu/urshifu.png", role: "all-rounder" },
+    venusaur: { image: "images/venusaur/venusaur.png", role: "attacker" },
+    wigglytuff: { image: "images/wigglytuff/wigglytuff.png", role: "supporter" },
+    zacian: { image: "images/zacian/zacian.png", role: "all-rounder" },
+    zeraora: { image: "images/zeraora/zeraora.png", role: "speedster" },
+    zoroark: { image: "images/zoroark/zoroark.png", role: "speedster" },
+};
+
+// Select or deselect a Pokémon
+function selectPokemon(pokemonName, pokemonImage, role) {
+  const existingIndex = selectedPokemons.findIndex(p => p.name === pokemonName);
+
+  if (existingIndex !== -1) {
+    selectedPokemons.splice(existingIndex, 1); // Deselect
+  } else {
+    if (selectedPokemons.length < 4) {
+      selectedPokemons.push({ name: pokemonName, image: pokemonImage, role: role });
+    } else {
+      alert("You can only select 4 Pokémon.");
+      return;
+    }
+  }
+
+  updateSelectedDisplay();
+}
+
+// Update selected Pokémon display
+function updateSelectedDisplay() {
+  const selectedDisplay = document.getElementById("selected-display");
+  selectedDisplay.innerHTML = "";
+
+  if (selectedPokemons.length === 0) {
+    selectedDisplay.innerHTML = "<p></p>";
+  } else {
+    selectedPokemons.forEach(pokemon => {
+      const img = document.createElement("img");
+      img.src = pokemon.image;
+      img.alt = pokemon.name;
+      img.classList.add("pokemon-icon", pokemon.role);
+      selectedDisplay.appendChild(img);
+    });
+  }
+
+  getTopSynergyMatchesForTeam();
+}
+
+// Reset selection
+function resetSelection() {
+  selectedPokemons = [];
+  updateSelectedDisplay();
+}
+
+// Calculate top 3 synergy matches based on full team
+function getTopSynergyMatchesForTeam() {
+  const selectedNames = selectedPokemons.map(p => p.name);
+  const synergyTotals = {};
+
+  selectedNames.forEach(selected => {
+    const scores = synergyScores[selected];
+    if (!scores) return;
+
+    for (const [partner, score] of Object.entries(scores)) {
+      if (selectedNames.includes(partner)) continue;
+      synergyTotals[partner] = (synergyTotals[partner] || 0) + score;
+    }
+  });
+
+  const topMatches = Object.entries(synergyTotals)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(entry => entry[0]);
+
+  showTopSynergyMatchesForTeam(topMatches);
+}
+
+// Display top 3 synergy matches
+function showTopSynergyMatchesForTeam(pokemonNames) {
+  const container = document.getElementById("top-synergy-team");
+  container.innerHTML = "";
+
+  if (!pokemonNames.length) {
+    container.innerHTML = "<p></p>";
+    return;
+  }
+
+  const label = document.createElement("p");
+  container.appendChild(label);
+
+  const wrapper = document.createElement("div");
+  wrapper.style.display = "flex";
+  wrapper.style.gap = "15px";
+  wrapper.style.justifyContent = "center";
+
+  pokemonNames.forEach(name => {
+    if (!allPokemonData[name]) return;
+
+    const { image, role } = allPokemonData[name];
+    const img = document.createElement("img");
+    img.src = image;
+    img.alt = name;
+    img.classList.add("pokemon-icon", role);
+
+    wrapper.appendChild(img);
+  });
+
+  container.appendChild(wrapper);
 }
